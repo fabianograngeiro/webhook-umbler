@@ -1,0 +1,31 @@
+const https = require('https');
+
+const options = {
+  hostname: 'https://git.heroku.com/manychat-webhook.git
+',
+  port: 443,
+  path: '/manychat-webhook',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  }
+};
+
+const server = https.createServer(options, (req, res) => {
+  let body = '';
+  
+  req.on('data', chunk => {
+    body += chunk.toString();
+  });
+  
+  req.on('end', () => {
+    console.log(`Recebido: ${body}`);
+    // Aqui você pode processar a solicitação recebida
+  });
+  
+  res.end('Ok');
+});
+
+server.listen(443, () => {
+  console.log(`Servidor iniciado em https://git.heroku.com/manychat-webhook.git`);
+});
